@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Rock, Paper, Scissors!</h1>
+        <h3>First to 5 points wins</h3>
+    </header>
+    <div class="choices">
+        <button class="playerChoice" id="rockBtn">Rock</button> 
+        <button class="playerChoice" id="paperBtn">Paper</button> 
+        <button class="playerChoice" id="scissorsBtn">Scissors</button> 
+    </div>  
+    <div class="score">
+        <p id="result"><br></p>
+        <h2>Your Score: <span id="playerScore">0</span></h2>
+        <h2>Computer Score: <span id="computerScore">0</span></h2>
+        <h2 id="finalResult"></h2>
+        <button id="playAgainBtn">Play Again</button>
+    </div>  
+
+
+
+<script>
+let playerScore = 0;
+let computerScore = 0;
+let gameActive = true;
+
+const playerScoreText = document.querySelector('#playerScore');
+const computerScoreText = document.querySelector('#computerScore');
+const result = document.querySelector('#result');
+const finalResult = document.querySelector('#finalResult');
+const playAgainBtn = document.querySelector('#playAgainBtn');
+
+
+function computerPlay() {
+	const randNumber = Math.floor(Math.random() * 3);
+  if (randNumber == 0) {
+  	return 'rock';
+  }
+  if (randNumber == 1) {
+  	return 'paper';
+  }
+  if (randNumber == 2) {
+  	return 'scissors';
+  }
+}
+function playRound(playerSelection, computerSelection) {
+    if (gameActive) {
+        playerSelection = playerSelection.toLowerCase();
+        if (playerSelection === computerSelection) {
+            result.textContent = "It's a tie!";
+        }
+        if (playerSelection === 'rock') {
+            if (computerSelection === 'scissors') {
+                updateScore(1);
+                result.textContent = "You win! Rock beats scissors";
+            }
+            else {
+                updateScore(-1);
+                result.textContent = "You lose! Paper beats rock";
+            }
+        }
+        if (playerSelection === 'paper') {
+            if (computerSelection === 'rock') {
+                updateScore(1);
+                result.textContent = "You win! Paper beats rock";
+            }
+            else {
+                updateScore(-1);
+                result.textContent = "You lose! Scissors beats paper";
+            }
+        }
+        if (playerSelection === 'scissors') {
+            if (computerSelection === 'paper') {
+                updateScore(1);
+                result.textContent = "You win! Scissors beats paper";
+            }
+            else {
+                updateScore(-1);
+                result.textContent = "You lose! Rock beats scissors";
+            }
+        }
+
+    }
+}
+
+function game() {
+	for (let i = 0; i < 5; ++i) {
+    let playerSelection = prompt("Please enter a move: rock | paper | scissors");
+    let computerSelection = computerPlay();
+    console.log(playRound(playerSelection, computerSelection));
+
+  }
+}
+
+const rockBtn = document.querySelector('#rockBtn');
+const paperBtn = document.querySelector('#paperBtn');
+const scissorsBtn = document.querySelector('#scissorsBtn');
+
+rockBtn.addEventListener('click', () => {
+    playRound('rock', computerPlay());
+});
+
+paperBtn.addEventListener('click', () => {
+    playRound('paper', computerPlay());
+});
+
+scissorsBtn.addEventListener('click', () => {
+    playRound('scissors', computerPlay());
+});
+
+playAgainBtn.addEventListener('click', () => {
+    playerScore = 0;
+    computerScore = 0;
+    playerScoreText.textContent = playerScore;
+    computerScoreText.textContent = computerScore;
+    finalResult.textContent = '';
+    result.innerText = '\n';
+    gameActive = true;
+});
+
+function updateScore(x, outcome) {
+    if (x === 1) {
+        playerScore++;
+        playerScoreText.textContent = playerScore;
+        if (playerScore === 5) {
+            endGame(1);
+        }
+    }
+    else {
+        computerScore++;
+        computerScoreText.textContent = computerScore;
+        if (computerScore === 5) {
+            endGame(-1);
+        }
+    }
+}
+
+function endGame(x) {
+    gameActive = false;
+    if (x === 1) {
+        finalResult.textContent = "Congrats! You won the game.";
+    }
+    else {
+        finalResult.textContent = "Game Over! You lost the game.";
+    }
+    playAgainBtn.style.visibility = "visible";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+.choices {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+header, .score {
+    text-align: center;
+    width: 400px;
+    margin: auto;
+    
+}
+
+
+.playerChoice {
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+}
+
+#playAgainBtn {
+    visibility: hidden;
+}
