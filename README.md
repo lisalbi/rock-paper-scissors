@@ -2,4 +2,4 @@
 
 Implementation of a rock paper scissors Javascript program from The Odin Project.
 
-:point_right:  Live Demo  :point_left:
+:point_right: Click here for the Live Demo  :point_left:
