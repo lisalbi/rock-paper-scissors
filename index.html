@@ -4,37 +4,52 @@
   <meta charset="UTF-8">
   <title>Rock Paper Scissors</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://use.typekit.net/tfw3wfo.css">
 </head>
 <body>
     <header>
         <h1>Rock, Paper, Scissors!</h1>
         <h3>First to 5 points wins</h3>
     </header>
-    <div class="choices">
-        <button class="playerChoice" id="rockBtn">Rock</button> 
-        <button class="playerChoice" id="paperBtn">Paper</button> 
-        <button class="playerChoice" id="scissorsBtn">Scissors</button> 
-    </div>  
-    <div class="score">
-        <p id="result"><br></p>
-        <h2>Your Score: <span id="playerScore">0</span></h2>
-        <h2>Computer Score: <span id="computerScore">0</span></h2>
-        <h2 id="finalResult"></h2>
-        <button id="playAgainBtn">Play Again</button>
-    </div>  
-
-
-
+    <div id='main'>
+        <div class='playerMoves' id='userMove'>
+            <h2>You</h2>
+            <div class='imgContainer' id='userImgContainer'>   
+            </div>
+            <div class="choiceBtnContainer">
+                <button class="rpcBtn" id="rockBtn" value='rock'><img class='icons' src="imgs/rock.png" alt='rock gesture'/></button> 
+                <button class="rpcBtn" id="paperBtn" value='paper'><img class='icons' src="imgs/paper.png" alt='paper gesture'/></button> 
+                <button class="rpcBtn" id="scissorsBtn" value='scissors'><img class='icons' src="imgs/scissors.png" alt='scissors gesture'/></button> 
+            </div> 
+        </div>
+        <div class="score">
+            <h2>Score</h2>
+            <hr>
+            <h2><span id="userScore">0</span> - <span id="computerScore">0</span></h2>
+            <p id='result'><br></p>
+        </div>  
+        <div class='playerMoves' id='aiMove'>
+            <h2>AI</h2>
+            <div class='imgContainer' id ='computerImgContainer'>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h2 id="finalResult"></h2>
+            <button id="playAgainBtn">Play Again</button>
+    
 <script>
-let playerScore = 0;
+let userScore = 0;
 let computerScore = 0;
 let gameActive = true;
 
-const playerScoreText = document.querySelector('#playerScore');
+const userScoreText = document.querySelector('#userScore');
 const computerScoreText = document.querySelector('#computerScore');
 const result = document.querySelector('#result');
 const finalResult = document.querySelector('#finalResult');
 const playAgainBtn = document.querySelector('#playAgainBtn');
+const imgContainers = document.querySelectorAll(".imgContainer");
+const playerMoves = document.querySelectorAll(".playerMoves");
 
 
 function computerPlay() {
@@ -49,13 +64,13 @@ function computerPlay() {
   	return 'scissors';
   }
 }
-function playRound(playerSelection, computerSelection) {
+function playRound(userSelection, computerSelection) {
+    updateImages(userSelection, computerSelection)
     if (gameActive) {
-        playerSelection = playerSelection.toLowerCase();
-        if (playerSelection === computerSelection) {
+        if (userSelection === computerSelection) {
             result.textContent = "It's a tie!";
         }
-        if (playerSelection === 'rock') {
+        else if (userSelection === 'rock') {
             if (computerSelection === 'scissors') {
                 updateScore(1);
                 result.textContent = "You win! Rock beats scissors";
@@ -65,7 +80,7 @@ function playRound(playerSelection, computerSelection) {
                 result.textContent = "You lose! Paper beats rock";
             }
         }
-        if (playerSelection === 'paper') {
+        else if (userSelection === 'paper') {
             if (computerSelection === 'rock') {
                 updateScore(1);
                 result.textContent = "You win! Paper beats rock";
@@ -75,7 +90,7 @@ function playRound(playerSelection, computerSelection) {
                 result.textContent = "You lose! Scissors beats paper";
             }
         }
-        if (playerSelection === 'scissors') {
+        else if (userSelection === 'scissors') {
             if (computerSelection === 'paper') {
                 updateScore(1);
                 result.textContent = "You win! Scissors beats paper";
@@ -89,46 +104,35 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-	for (let i = 0; i < 5; ++i) {
-    let playerSelection = prompt("Please enter a move: rock | paper | scissors");
-    let computerSelection = computerPlay();
-    console.log(playRound(playerSelection, computerSelection));
+// const rockBtn = document.querySelector('#rockBtn');
+// const paperBtn = document.querySelector('#paperBtn');
+// const scissorsBtn = document.querySelector('#scissorsBtn');
 
-  }
-}
+// rockBtn.addEventListener('click', () => {
+//     playRound('rock', computerPlay());
+// });
 
-const rockBtn = document.querySelector('#rockBtn');
-const paperBtn = document.querySelector('#paperBtn');
-const scissorsBtn = document.querySelector('#scissorsBtn');
+// paperBtn.addEventListener('click', () => {
+//     playRound('paper', computerPlay());
+// });
 
-rockBtn.addEventListener('click', () => {
-    playRound('rock', computerPlay());
-});
+// scissorsBtn.addEventListener('click', () => {
+//     playRound('scissors', computerPlay());
+// });
 
-paperBtn.addEventListener('click', () => {
-    playRound('paper', computerPlay());
-});
+const rpcBtns = document.querySelectorAll(".rpcBtn");
 
-scissorsBtn.addEventListener('click', () => {
-    playRound('scissors', computerPlay());
-});
+rpcBtns.forEach(btn => btn.addEventListener('click', function() {
+    playRound(this.value, computerPlay());
+}));
 
-playAgainBtn.addEventListener('click', () => {
-    playerScore = 0;
-    computerScore = 0;
-    playerScoreText.textContent = playerScore;
-    computerScoreText.textContent = computerScore;
-    finalResult.textContent = '';
-    result.innerText = '\n';
-    gameActive = true;
-});
+playAgainBtn.addEventListener('click', reset);
 
 function updateScore(x, outcome) {
     if (x === 1) {
-        playerScore++;
-        playerScoreText.textContent = playerScore;
-        if (playerScore === 5) {
+        userScore++;
+        userScoreText.textContent = userScore;
+        if (userScore === 5) {
             endGame(1);
         }
     }
@@ -141,15 +145,39 @@ function updateScore(x, outcome) {
     }
 }
 
-function endGame(x) {
+function endGame(winner) {
+    rpcBtns.forEach(btn => btn.disabled = true);
     gameActive = false;
-    if (x === 1) {
+    if (winner === 1) {
         finalResult.textContent = "Congrats! You won the game.";
+        playerMoves[0].style.border = '4px solid rgb(25, 156, 25)';
+        playerMoves[1].style.border = '4px solid rgb(245, 85, 85)';
     }
     else {
         finalResult.textContent = "Game Over! You lost the game.";
+        playerMoves[0].style.border = '4px solid rgb(245, 85, 85)';
+        playerMoves[1].style.border = '4px solid rgb(25, 156, 25)';
     }
     playAgainBtn.style.visibility = "visible";
+}
+
+function reset() {
+    rpcBtns.forEach(btn => btn.disabled = false);
+    updateImages('default', 'default');
+    playAgainBtn.style.visibility = "hidden";
+    userScore = 0;
+    computerScore = 0;
+    userScoreText.textContent = userScore;
+    computerScoreText.textContent = computerScore;
+    finalResult.textContent = '';
+    result.innerText = '\n';
+    gameActive = true;
+    playerMoves.forEach(container => container.style.border = null);
+}
+
+function updateImages(userSelection, computerSelection) {
+    imgContainers[0].style.backgroundImage = `url("imgs/${userSelection}.png")`;
+    imgContainers[1].style.backgroundImage = `url("imgs/${computerSelection}.png")`;
 }
 
 </script>

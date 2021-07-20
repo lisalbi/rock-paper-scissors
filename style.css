@@ -1,33 +1,113 @@
 body {
+    margin: auto;
+    max-width: 1000px;
     font-family: brandon-grotesque;
     font-weight: 500;
+    color:rgb(39, 39, 39);
     font-style: normal;
-}
-.choices {
-    width: 100%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-}
-
-header, .score {
     text-align: center;
-    width: 400px;
-    margin: auto;
-    
+    min-height: 100%;
+    background-color: #e2f6f8;
 }
 
+header {
+    text-align: center;
+    margin: auto;
+}
 
-.playerChoice {
+header h3 {
+    margin-top: -10px;
+}
+
+.choiceBtnContainer {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.rpcBtn {
     margin: 10px;
-    height: 200px;
-    width: 200px;
-    background: lightblue;
-    border-radius: 10%;
-    border-width: 0;
-    filter: drop-shadow(5px 5px 3px lightgray);
+    height: 80px;
+    width: 80px;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    border: 3px solid #a7f3f9;
+}
+
+.rpcBtn:hover {
+    filter: drop-shadow(5px 5px 3px rgb(230, 230, 230));
+}
+
+.rpcBtn:disabled,
+.rpcBtn[disabled] {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
 }
 
 #playAgainBtn {
     visibility: hidden;
+}
+
+.rpcBtn .icons {
+    width: 70%;
+    height: 70%;
+}
+
+.playerMoves {
+    background-color: white;
+    position: relative;
+    text-align: center;
+    border: 2px solid lightgray;
+    border-radius: 10px;
+}
+
+#main {
+    width: 900px;
+    height: 400px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 4fr 3fr 4fr;
+    grid-template-rows: 1fr;
+    margin: auto;
+}
+
+.score {
+    margin: auto;
+    width: 80%;
+}
+
+.imgContainer {
+    margin-top: 25px;
+    width: 50%;
+    height: 50%;
+    background: url("imgs/default.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(233, 233, 233, 0.11);
+}
+
+#playAgainBtn {
+    font-family: brandon-grotesque;
+    font-size: 18px;
+    font-weight: 500;
+    width: 120px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+}
+
+#playAgainBtn:hover {
+    background-color: #f3f3f3;
 }
