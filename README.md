@@ -1,5 +1,7 @@
 # Rock Paper Scissors
+:star2: &nbsp; [Click here for the live demo](https://lisalbi.github.io/rock-paper-scissors/) &nbsp; :star2:
 
-Implementation of a rock paper scissors Javascript program from The Odin Project.
+Implementation of a Rock Paper Scissors game using HTML, CSS, and Javascript.
+<br/><br/>
+![Screenshot](/imgs/screenshot.png "screenshot")
 
-:point_right: &nbsp; [Click here for the live demo](https://lisalbi.github.io/rock-paper-scissors/) &nbsp; :point_left:
